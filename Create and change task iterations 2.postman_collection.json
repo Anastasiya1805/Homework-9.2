@@ -1,0 +1,1136 @@
+{
+	"info": {
+		"_postman_id": "f7448cc1-9ee8-44d7-8265-66fb83cb43e1",
+		"name": "Create and change task iterations 2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18927542"
+	},
+	"item": [
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"pm.environment.set('token', jsonData.id_token)",
+							"",
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.token).to.exist;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Token is a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData.token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Token is in a valid format\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.token).to.be.a('string').and.to.have.lengthOf.at.least(1);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9,it-IT;q=0.8,it;q=0.7,fr-FR;q=0.6,fr;q=0.5,de-DE;q=0.4,de;q=0.3,ru;q=0.2"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Origin",
+						"value": "https://sqlverifier-50d286d70656.herokuapp.com"
+					},
+					{
+						"key": "Referer",
+						"value": "https://sqlverifier-50d286d70656.herokuapp.com/login"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-origin"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"119\", \"Chromium\";v=\"119\", \"Not?A_Brand\";v=\"24\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					},
+					{
+						"key": "x-mock-match-request-headers",
+						"value": "400",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"{{adminLogin}}\",\"password\":\"{{adminPassword}}\",\"rememberMe\":false}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/authenticate",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"authenticate"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "login positive",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,it-IT;q=0.8,it;q=0.7,fr-FR;q=0.6,fr;q=0.5,de-DE;q=0.4,de;q=0.3,ru;q=0.2"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Origin",
+								"value": "https://sqlverifier-50d286d70656.herokuapp.com"
+							},
+							{
+								"key": "Referer",
+								"value": "https://sqlverifier-50d286d70656.herokuapp.com/login"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Google Chrome\";v=\"119\", \"Chromium\";v=\"119\", \"Not?A_Brand\";v=\"24\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "x-mock-match-request-headers",
+								"value": "400",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"{{adminLogin}}\",\"password\":\"{{adminPassword}}\",\"rememberMe\":false}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/authenticate",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\r\n    \"token\":\"fdjfhjdhfjfhjhfkjsdkgfdklkllklklkls\"\r\n}"
+				},
+				{
+					"name": "login no-pass",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,it-IT;q=0.8,it;q=0.7,fr-FR;q=0.6,fr;q=0.5,de-DE;q=0.4,de;q=0.3,ru;q=0.2"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Origin",
+								"value": "https://sqlverifier-50d286d70656.herokuapp.com"
+							},
+							{
+								"key": "Referer",
+								"value": "https://sqlverifier-50d286d70656.herokuapp.com/login"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Google Chrome\";v=\"119\", \"Chromium\";v=\"119\", \"Not?A_Brand\";v=\"24\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "x-mock-match-request-headers",
+								"value": "400",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"{{adminLogin}}\",\"password\":\" \",\"rememberMe\":false}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/authenticate",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"error\": \"Password is invalid\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "get tasks list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"/*let currentAmountOfTasks = pm.response.json().length;",
+							"console.log(pm.response.json().length)",
+							"",
+							"pm.environment.set('currentAmountOfTasks', currentAmountOfTasks)",
+							"pm.environment.set(\"ids\", [])",
+							"",
+							"if(currentAmountOfTasks < pm.environment.get('targetNumberOfTasks')) {",
+							"    pm.execution.setNextRequest('create a task')",
+							"} else {",
+							"    pm.environment.set(\"lastID\",pm.response.json()[currentAmountOfTasks - 1].id)",
+							"    let ids = [];",
+							"    ids.push(pm.environment.get(\"lastID\"))",
+							"    pm.environment.set(\"ids\", ids)",
+							"    pm.execution.setNextRequest('change task text')",
+							"    }*/",
+							"",
+							"pm.test(\"Content-Type header is application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields - id, text, answer, and title\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('array');",
+							"    responseData.forEach(function(task) {",
+							"        pm.expect(task).to.have.property('id');",
+							"        pm.expect(task).to.have.property('text');",
+							"        pm.expect(task).to.have.property('answer');",
+							"        pm.expect(task).to.have.property('title');",
+							"    });",
+							"});",
+							"",
+							"",
+							"pm.test(\"Each task has non-empty id, text, answer, and title properties\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('array');",
+							"    responseData.forEach(function(task) {",
+							"        pm.expect(task.id).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"ID should not be empty\");",
+							"        pm.expect(task.text).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Text should not be empty\");",
+							"        pm.expect(task.answer).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Answer should not be empty\");",
+							"        pm.expect(task.title).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Title should not be empty\");",
+							"    });",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/tasks?page=0&size=100",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"tasks"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "100"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "get tasks 50 size",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tasks?page=0&size=50",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "50"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": \"1\",\n        \"text\": \"string\",\n        \"answer\": \"string\",\n        \"title\": \"string\"\n    },\n    {\n        \"id\": \"2\",\n        \"text\": \"string\",\n        \"answer\": \"string\",\n        \"title\": \"string\"\n    },\n    {\n        \"id\": \"3\",\n        \"text\": \"string\",\n        \"answer\": \"string\",\n        \"title\": \"string\"\n    }\n]"
+				},
+				{
+					"name": "get tasks list no auth header",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg",
+								"disabled": true
+							},
+							{
+								"key": "x-mock-match-request-headers",
+								"value": "401",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tasks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "100",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"error\":\"Not authorized\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "create a task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Your test name\", function () {",
+							"    pm.expect(jsonData.text).to.eql(\"some text\");",
+							"});",
+							"",
+							"const ids = pm.environment.get(\"ids\")",
+							"console.log(\"jsonData.id is \" + jsonData.id)",
+							"ids.push(jsonData.id)",
+							"console.log(ids)",
+							"pm.environment.set(\"ids\", ids)",
+							"",
+							"pm.environment.set('lastID', jsonData.id)",
+							"",
+							"if(ids.lenght>0){",
+							"    let allIds = ids.map(task => task.id)",
+							"}",
+							"",
+							"let currentAmountOfTasks = pm.environment.get(\"currentAmountOfTasks\");",
+							"currentAmountOfTasks++;",
+							"pm.environment.set('currentAmountOfTasks', currentAmountOfTasks)",
+							"",
+							"if(currentAmountOfTasks < pm.environment.get('targetNumberOfTasks')) {",
+							"    pm.execution.setNextRequest(\"create a task\")",
+							"} else if (ids.length > 0){",
+							"    let lastTask = ids[ids.length - 1]",
+							"    pm.environment.set(\"currentTask\", lastTask)",
+							"    pm.execution.setNextRequest('change task text')",
+							"}",
+							"",
+							"pm.test(\"Response status code is 201\", function () {",
+							"    pm.expect(pm.response.code).to.equal(201);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields - text, answer, and title\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData).to.have.property('text');",
+							"  pm.expect(responseData).to.have.property('answer');",
+							"  pm.expect(responseData).to.have.property('title');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is within an acceptable range\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Validate the schema of the response JSON\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.text).to.be.a('string');",
+							"    pm.expect(responseData.answer).to.be.a('string');",
+							"    pm.expect(responseData.title).to.be.a('string');",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+					},
+					{
+						"key": "x-mock-match-request-headers",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"text\": \"some text\",\n  \"answer\": \"string\",\n  \"title\": \"string\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/tasks",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "create task 201(the first case)",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+							},
+							{
+								"key": "x-mock-match-request-headers",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"text\": \"some text\",\n  \"answer\": \"string\",\n  \"title\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tasks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\":\"1\",\n    \"text\": \"some text\",\n    \"answer\": \"string\",\n    \"title\": \"string\"\n}"
+				},
+				{
+					"name": "create a task empty answer",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+							},
+							{
+								"key": "x-mock-match-request-headers",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"text\": \"some text\",\n  \"answer\": \"\",\n  \"title\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tasks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"One of the required fields is empty\"\n}"
+				}
+			]
+		},
+		{
+			"name": "change task text",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields - id, text, answer, and title\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData).to.have.property('id');\r",
+							"    pm.expect(responseData).to.have.property('text');\r",
+							"    pm.expect(responseData).to.have.property('answer');\r",
+							"    pm.expect(responseData).to.have.property('title');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Text, answer, and title are non-empty strings\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.text).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Text should not be empty\");\r",
+							"    pm.expect(responseData.answer).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Answer should not be empty\");\r",
+							"    pm.expect(responseData.title).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Title should not be empty\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 1000ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": \"{{lastID}}\",\n  \"text\": \"some new new text\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/tasks/{{lastID}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"tasks",
+						"{{lastID}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "change task (update text)",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"{{lastID}}\",\n  \"text\": \"it's new text\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tasks/{{lastID}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks",
+								"{{lastID}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 3,\n    \"text\": \"it's new text\",\n    \"answer\": \"string\",\n    \"title\": \"string\"\n}"
+				},
+				{
+					"name": "change task not found ID",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"111111\",\n  \"text\": \"some new new text\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/tasks/{{lastID}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks",
+								"{{lastID}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Not ID task\"\n}"
+				}
+			]
+		},
+		{
+			"name": "get task data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let arr = pm.environment.get('ids')",
+							"",
+							"arr.forEach((id)=>{",
+							"    pm.sendRequest(",
+							"        {url: `https://sqlverifier-live-6e21ca0ed768.herokuapp.com/api/tasks/${id}`,",
+							"        method: 'DELETE',",
+							"        header:",
+							"        {'Authorization': 'Bearer ' + pm.environment.get('token'),",
+							"        'accept': '*/*'}",
+							"        }",
+							"        , function (err, response) {",
+							"        console.log(response);",
+							"    });",
+							"})",
+							"pm.environment.unset(\"token\");",
+							"",
+							"pm.test(\"Response status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 1100ms\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(1100);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields - id, text, answer, and title\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.id).to.exist;",
+							"    pm.expect(responseData.text).to.exist;",
+							"    pm.expect(responseData.answer).to.exist;",
+							"    pm.expect(responseData.title).to.exist;",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/tasks/{{lastID}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"tasks",
+						"{{lastID}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "get task data",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tasks/{{lastID}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks",
+								"{{lastID}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"description": "",
+							"type": "text"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 8,\n    \"text\": \"some text\",\n    \"answer\": \"tekstik\",\n    \"title\": \"titlik\"\n}"
+				},
+				{
+					"name": "get task data 404",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg",
+								"disabled": true
+							},
+							{
+								"key": "x-mock-match-request-headers",
+								"value": "401",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/tasks/222",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"tasks",
+								"222"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 404,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"error\":\"Not found\"\r\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
