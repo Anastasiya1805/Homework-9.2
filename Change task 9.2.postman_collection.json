@@ -1,0 +1,504 @@
+{
+	"info": {
+		"_postman_id": "f4a11059-f6b3-4beb-9c11-f45a6a94b7e0",
+		"name": "Change task 9.2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18927542"
+	},
+	"item": [
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData = pm.response.json();",
+							"pm.environment.set('token', responseData.id_token)",
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required field - id_token\", function () {",
+							"    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.id_token).to.exist;",
+							"});",
+							"",
+							"",
+							"pm.test(\"id_token is a non-empty string\", function () {",
+							"  ",
+							"  pm.expect(responseData.id_token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"id_token should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type header is 'application/json'\", function () {",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is in an acceptable range\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000, \"Response time should be less than 1000ms\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9,it-IT;q=0.8,it;q=0.7,fr-FR;q=0.6,fr;q=0.5,de-DE;q=0.4,de;q=0.3,ru;q=0.2"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Origin",
+						"value": "https://sqlverifier-50d286d70656.herokuapp.com"
+					},
+					{
+						"key": "Referer",
+						"value": "https://sqlverifier-50d286d70656.herokuapp.com/login"
+					},
+					{
+						"key": "Sec-Fetch-Dest",
+						"value": "empty"
+					},
+					{
+						"key": "Sec-Fetch-Mode",
+						"value": "cors"
+					},
+					{
+						"key": "Sec-Fetch-Site",
+						"value": "same-origin"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"119\", \"Chromium\";v=\"119\", \"Not?A_Brand\";v=\"24\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"macOS\""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"{{adminLogin}}\",\"password\":\"{{adminPassword}}\",\"rememberMe\":false}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/authenticate",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get tasks list",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"function checkResponseStatusAndKey(expStatus, expKey){\r",
+							"    pm.response.to.have.status(expStatus);\r",
+							"    pm.expect(responseData).to.be.an('array');\r",
+							"    pm.expect(responseData[0]).to.be.an('object').to.have.property(expKey)\r",
+							"    }\r",
+							"pm.environment.set('checkResponseStatusAndKey', checkResponseStatusAndKey.toString());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData = pm.response.json();",
+							"console.log(responseData.length)",
+							"let counter = 0;",
+							"let baseUrl = pm.environment.get('baseUrl')",
+							"let arrIds = [];",
+							"",
+							"let options = {",
+							"    url: `${baseUrl}/tasks`,",
+							"    method: 'POST',",
+							"    header:",
+							"    {'Authorization': 'Bearer ' + pm.environment.get('token'),",
+							"    'accept': '*/*',",
+							"    'Content-Type': 'application/json'",
+							"    },",
+							"    body: {",
+							"            mode: 'application/json',",
+							"  raw: JSON.stringify({\"text\": \"some text\",",
+							"  \"answer\": \"string\",",
+							"  \"title\": \"string\"})",
+							"}",
+							"    }",
+							"",
+							"//console.log(responseData.length)",
+							"//let counter = 0;",
+							"",
+							"",
+							"// console.log(counter)",
+							"// for(let i=0; i<json.length; i++) {",
+							"//     console.log(i)",
+							"//         pm.sendRequest(options, (error, response)=>{",
+							"//         console.log(response.json())",
+							"//         arrIds.push(response.json().id)",
+							"//         console.log(arrIds)",
+							"// })",
+							"// }",
+							"// while (counter < 27) {",
+							"//     pm.sendRequest(options, (error, response)=>{",
+							"//         console.log(response.json())",
+							"//         arrIds.push(response.json().id)",
+							"//         console.log(arrIds)",
+							"//         counter++",
+							"//     });",
+							"// }",
+							"",
+							"// } ",
+							"    // postman.setNextRequest(\"change task text\")responseData.lengt",
+							"",
+							"//pm.environment.set('arrIds', arrIds)",
+							"//pm.test(\"Response status code is 200\", function () {",
+							"   // pm.expect(pm.response.code).to.equal(200);",
+							"//});",
+							"",
+							"",
+							"eval(pm.environment.get(\"checkResponseStatusAndKey\"))",
+							"pm.test(\"Response code and id property is 200 and exists\", function() {",
+							"    checkResponseStatusAndKey(200, \"id\")",
+							"})",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"  ",
+							"  pm.expect(responseData).to.be.an('array').that.is.not.empty;",
+							"  ",
+							"  responseData.forEach(function(task) {",
+							"    pm.expect(task).to.have.property('id');",
+							"    pm.expect(task).to.have.property('text');",
+							"    pm.expect(task).to.have.property('answer');",
+							"    pm.expect(task).to.have.property('title');",
+							"  });",
+							"});",
+							"",
+							"pm.test(\"Id is a non-negative integer\", function () {",
+							"",
+							"    pm.expect(responseData).to.be.an('array');",
+							"    responseData.forEach(function (task) {",
+							"        pm.expect(task.id).to.be.a('number');",
+							"        pm.expect(task.id).to.be.at.least(0);",
+							"    });",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response is in JSON format\", function () {",
+							"  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/tasks?page=0&size=1000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"tasks"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "1000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create a task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseData = pm.response.json();",
+							"",
+							"eval(pm.environment.get(\"checkResponseStatusAndKey\"))",
+							"",
+							"pm.test(\"Response code and id property is 201 and exists\", function() {",
+							"    checkResponseStatusAndKey(201, \"id\")",
+							"})",
+							"",
+							"pm.test(\"Set environment variable task_id to the id from the response\", function () {",
+							"    pm.environment.set(\"task_id\", pm.response.json().id);",
+							"});",
+							"",
+							"///postman.setNextRequest(\"get tasks list\");",
+							"",
+							"// Test for response content type",
+							"pm.test(\"Response has content type of application/json\", function () {",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+							"});",
+							"pm.test(\"Id is a non-negative integer\", function () {  ",
+							"  pm.expect(responseData.id).to.be.a('number').and.to.be.at.least(0, \"Id should be a non-negative integer\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Text and title must be non-empty strings\", function () {  ",
+							"  pm.expect(responseData).to.be.an('object');",
+							"  pm.expect(responseData.text).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Text should not be empty\");",
+							"  pm.expect(responseData.title).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Title should not be empty\");",
+							"});",
+							"",
+							"",
+							"pm.test(\"Verify that the 'answer' property is present in the response\", function () {  ",
+							"  pm.expect(responseData).to.have.property('answer');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Text and title properties should be of type string\", function () {    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData.text).to.be.a('string');",
+							"    pm.expect(responseData.title).to.be.a('string');",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response contains the required properties for a task creation\", function () {    ",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData).to.have.property('id');",
+							"    pm.expect(responseData).to.have.property('text');",
+							"    pm.expect(responseData).to.have.property('answer');",
+							"    pm.expect(responseData).to.have.property('title');",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"text\": \"some text\",\n  \"answer\": \"string\",\n  \"title\": \"string\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/tasks",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change task text",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": {{task_id}},\n  \"text\": \"some new new text\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/tasks/{{task_id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"tasks",
+						"{{task_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get task data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"let arr = [32364,32365,32366,32367,32368,32369,32370,32371,32372,32373,32374,32375,32376,32377,32378,32379,32380,32381,32382,32383,32384,32385,32386,32387]",
+							"",
+							"arr.forEach((id)=>{",
+							"pm.sendRequest(",
+							"    {url: `https://sqlverifier-50d286d70656.herokuapp.com/api/tasks/${id}`,",
+							"    method: 'DELETE',",
+							"    header:",
+							"    {'Authorization': 'Bearer ' + pm.environment.get('token'),",
+							"    'accept': '*/*'}",
+							"    }",
+							"    , function (err, response) {",
+							"    console.log(response);",
+							"});",
+							"})",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDY1MTA3OCwiYXV0aCI6IlJPTEVfQURNSU4iLCJpYXQiOjE3MDA1NjQ2Nzh9.vIN53s5RHi0_NuFKchJ3Wxi3ajjjtTt_0X_qJSYtFti7Xw4Veqy9jEpRervasFgwCyrZGihIehGmwaUXLYIaFg"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/tasks/{{task_id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"tasks",
+						"{{task_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"function checkResponseStatusAndKey(expectedStatus, expectedKey) {",
+					"    pm.response.to.have.status(expectedStatus);",
+					"    pm.expect(responseData).to.be.an('object').to.have.property(expectedKey)",
+					"}",
+					"pm.environment.set(\"checkResponseStatusAndKey\", checkResponseStatusAndKey.toString());",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
